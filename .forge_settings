@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+<rootpath>"/rest"</rootpath>
+<rest>
+<applicationclass>
+<package>tomczak.product.backlog.rest</package>
+<name>c:\/Documents and Settings/Zbigniew/My Documents/jboss/product-backlog/src/main/java/tomczak/product/backlog/rest/JaxRsActivator.java</name>
+</applicationclass>
+</rest>
+</configuration>

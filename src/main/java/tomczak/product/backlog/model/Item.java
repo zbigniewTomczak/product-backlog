@@ -1,26 +1,39 @@
 package tomczak.product.backlog.model;
 
-import javax.persistence.Entity;
 import java.io.Serializable;
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Version;
-import java.lang.Override;
-import tomczak.product.backlog.model.Product;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.Set;
-import java.util.HashSet;
-import tomczak.product.backlog.model.Event;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 
 @Entity
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"name","product_id"}))
+@NamedQueries({
+	@NamedQuery(name=Item.GET_BY_PRODUCT_ID, 
+			query="SELECT i FROM Item i WHERE i.product.id = :productId"),
+	@NamedQuery(name=Item.COUNT_BY_NAME_AND_PRODUCT_ID,
+			query="SELECT COUNT(i) FROM Item i WHERE i.product.id = :productId AND i.name = :name")
+})
 public class Item implements Serializable
 {
 
-   @Id
+   public static final String GET_BY_PRODUCT_ID = "Item.getByProductId";
+public static final String COUNT_BY_NAME_AND_PRODUCT_ID = "Item.CountByNameAndProductId";
+@Id
    private @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id", updatable = false, nullable = false)
    Long id = null;
@@ -35,7 +48,8 @@ public class Item implements Serializable
    private Product product;
 
    private @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-   Set<Event> events = new HashSet<Event>();
+   @OrderBy("date")
+   List<Event> events = new ArrayList<Event>();
 
    public Long getId()
    {
@@ -117,12 +131,12 @@ public class Item implements Serializable
       this.product = product;
    }
 
-   public Set<Event> getEvents()
+   public List<Event> getEvents()
    {
       return this.events;
    }
 
-   public void setEvents(final Set<Event> events)
+   public void setEvents(final List<Event> events)
    {
       this.events = events;
    }

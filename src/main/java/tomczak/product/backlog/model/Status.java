@@ -13,6 +13,10 @@ import java.lang.Override;
 public class Status implements Serializable
 {
 
+   public static final Long OPEN_STATUS_ID = 1L;
+   public static final Long CLOSE_STATUS_ID = 2L;
+   public static final Long INITIAL_STATUS_ID = OPEN_STATUS_ID;
+   
    @Id
    private @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id", updatable = false, nullable = false)

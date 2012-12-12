@@ -1,6 +1,8 @@
 package tomczak.product.backlog.helper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,22 +32,17 @@ public class ItemRepositoryBean {
 	public void init() {
 		openItemsList = new ArrayList<Item>();
 		closedItemsList = new ArrayList<Item>();
-		List<Item> list = em.createNamedQuery(Item.GET_BY_PRODUCT_ID, Item.class)
+		openItemsList = em.createNamedQuery(Item.GET_BY_PRODUCT_ID_AND_STATUS_ID, Item.class)
 				.setParameter("productId", product.getId())
+				.setParameter("statusId", Status.OPEN_STATUS_ID)
 				.getResultList();
-		Iterator<Item> iter = list.iterator();
-		System.out.println("List.size()" + list.size());
-		while(iter.hasNext()) {
-			Item item = iter.next();
-			em.refresh(item);
-			Status status = getCurrentStatusForItemId(item.getId());
-			if (Status.OPEN_STATUS_ID.equals(status.getId())) {
-				openItemsList.add(item);
-			} else if (Status.CLOSE_STATUS_ID.equals(status.getId())) {
-				closedItemsList.add(item);
-			}
-		}
-		//TODO order items by date descending
+		closedItemsList = em.createNamedQuery(Item.GET_BY_PRODUCT_ID_AND_STATUS_ID, Item.class)
+				.setParameter("productId", product.getId())
+				.setParameter("statusId", Status.CLOSE_STATUS_ID)
+				.getResultList();
+		Comparator<Item> comparator = new Item.LastChangeComparator();
+		Collections.sort(openItemsList, comparator);
+		Collections.sort(closedItemsList, comparator);
 	}
 	
 	

@@ -11,7 +11,7 @@
 
 		<p:layoutUnit position="north" size="100" resizable="true"
 			closable="true" collapsible="true">
-			<h:outputText value="Top unit content." />
+			<h:outputText value="Product description and options" />
 		</p:layoutUnit>
 
 		<p:layoutUnit position="south" size="100" resizable="true"
@@ -20,26 +20,26 @@
 		</p:layoutUnit>
 
 		<p:layoutUnit position="east" size="200" header="Left"
-			resizable="true" closable="true" collapsible="true">  
-        Include chart <h:outputText value="#{itemController.count}" id="count"/>
+			resizable="true"  collapsible="true">  
+        Burndown chart <h:outputText value="#{itemController.count}" id="count"/>
     </p:layoutUnit>
 
 
 		<p:layoutUnit position="center">
 			<p:panel>
 				<h:form>
-					<p:inputText id="newItemName" value="#{itemController.newItemName}"
+					<p:inputText id="newItemName" value="#{itemCreateController.newItemName}"
 						required="true" requiredMessage="This field cannot be empty"
-						binding="#{itemController.newNameInput}" />
-					<p:commandButton action="#{itemController.create}" value="New item"
+						binding="#{itemCreateController.newNameInput}" />
+					<p:commandButton action="#{itemCreateController.create}" value="New item"
 						ajax="false"></p:commandButton>
 					<br />
 					<h:message for="newItemName" errorClass="ui-message-error" />
 				</h:form>
 
 			</p:panel>
-			<p:accordionPanel multiple="true">
-				<p:tab title="Open items">
+			<p:accordionPanel multiple="true" id="itemLists">
+				<p:tab title="Open items" >
 					<p:scrollPanel style="width:100%;height:100%">
 						<p:dataTable var="item"
 							value="#{itemListController.openItemsList}" >
@@ -47,8 +47,8 @@
 								<h:form >
 									<h:outputText value="#{item.name}">
 									</h:outputText>
-									<p:ajax event="dblclick" update=":count"
-										listener="#{itemController.close(7)}" >
+									<p:ajax event="dblclick" update=":count :itemLists"
+										listener="#{itemController.close(item.id)}" >
 									  <f:param name="itemId" value="#{item.id}"></f:param>
 									</p:ajax>
 								</h:form>
@@ -61,7 +61,14 @@
 						<p:dataTable var="item"
 							value="#{itemListController.closedItemsList}">
 							<p:column>
-								<h:outputText value="#{item.name}" />
+								<h:form>
+									<h:outputText value="#{item.name}">
+									</h:outputText>
+									<p:ajax event="dblclick" update=":count :itemLists"
+										listener="#{itemController.open(item.id)}" >
+									  <f:param name="itemId" value="#{item.id}"></f:param>
+									</p:ajax>
+								</h:form>
 							</p:column>
 						</p:dataTable>
 					</p:scrollPanel>

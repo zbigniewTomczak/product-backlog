@@ -2,6 +2,7 @@ package tomczak.product.backlog.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -23,17 +24,34 @@ import javax.persistence.Version;
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"name","product_id"}))
 @NamedQueries({
-	@NamedQuery(name=Item.GET_BY_PRODUCT_ID, 
-			query="SELECT i FROM Item i WHERE i.product.id = :productId"),
+	@NamedQuery(name=Item.GET_BY_PRODUCT_ID_AND_STATUS_ID, 
+			query="SELECT i FROM Item i WHERE i.product.id = :productId AND i.status.id=:statusId"),
 	@NamedQuery(name=Item.COUNT_BY_NAME_AND_PRODUCT_ID,
 			query="SELECT COUNT(i) FROM Item i WHERE i.product.id = :productId AND i.name = :name")
 })
 public class Item implements Serializable
 {
 
-   public static final String GET_BY_PRODUCT_ID = "Item.getByProductId";
-public static final String COUNT_BY_NAME_AND_PRODUCT_ID = "Item.CountByNameAndProductId";
-@Id
+	public static class LastChangeComparator implements Comparator<Item> {
+
+		@Override
+		public int compare(Item item1, Item item2) {
+			if (item1.getEvents() != null && item2.getEvents() != null) {
+				if (item1.getEvents().size() > 0) {
+					if (item2.getEvents().size() > 0) {
+						item1.getEvents().get(item1.getEvents().size() - 1).getDate()
+							.compareTo(item2.getEvents().get(item2.getEvents().size() - 1).getDate());
+					}
+				} 
+			}
+			return 0;
+		}
+		
+	}
+	
+   public static final String GET_BY_PRODUCT_ID_AND_STATUS_ID = "Item.getByProductIdAndStatusId";
+	public static final String COUNT_BY_NAME_AND_PRODUCT_ID = "Item.CountByNameAndProductId";
+	@Id
    private @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "id", updatable = false, nullable = false)
    Long id = null;
@@ -47,9 +65,12 @@ public static final String COUNT_BY_NAME_AND_PRODUCT_ID = "Item.CountByNameAndPr
    @ManyToOne
    private Product product;
 
+   @ManyToOne
+   private Status status;
+   
    private @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
    @OrderBy("date")
-   List<Event> events = new ArrayList<Event>();
+   List<ItemEvent> events = new ArrayList<ItemEvent>();
 
    public Long getId()
    {
@@ -131,13 +152,23 @@ public static final String COUNT_BY_NAME_AND_PRODUCT_ID = "Item.CountByNameAndPr
       this.product = product;
    }
 
-   public List<Event> getEvents()
+   public List<ItemEvent> getEvents()
    {
       return this.events;
    }
 
-   public void setEvents(final List<Event> events)
+   public void setEvents(final List<ItemEvent> events)
    {
       this.events = events;
    }
+
+public Status getStatus() {
+	return status;
+}
+
+public void setStatus(Status status) {
+	this.status = status;
+}
+   
+   
 }

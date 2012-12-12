@@ -28,6 +28,7 @@ public class ItemEventsBean {
 	
 	public boolean create(String newItemName) {
 		Status initialStatus = entityHelper.findById(Status.class, Status.INITIAL_STATUS_ID);
+		currentProduct = em.find(Product.class, currentProduct.getId());
 		Item item = new Item();
 		item.setName(newItemName);
 		item.setProduct(currentProduct);
@@ -38,6 +39,10 @@ public class ItemEventsBean {
 		event.setItem(item);
 		event.setStatus(initialStatus);
 		entityHelper.persist(event);
+		if(currentProduct.getStartDate() == null) {
+			currentProduct.setStartDate(today);
+			em.persist(currentProduct);
+		}
 		System.out.println("Created:" + event.getId() + "(" + event.getId()+")" + event.getItem().getId());
 		if (item.getId() != null && event.getId() != null) {
 			itemChangeEvent.fire(item);

@@ -1,18 +1,20 @@
 package tomczak.product.backlog.model;
 
-import javax.persistence.Entity;
 import java.io.Serializable;
-import javax.persistence.Id;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Version;
-import java.lang.Override;
-import java.util.Set;
-import java.util.HashSet;
-import tomczak.product.backlog.model.Item;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 @Entity
 public class Product implements Serializable
@@ -29,7 +31,10 @@ public class Product implements Serializable
    @Column
    private String name;
 
-   private @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+   @Temporal(TemporalType.DATE)
+   private Date startDate;
+   
+   private @OneToMany(mappedBy = "product")
    Set<Item> items = new HashSet<Item>();
 
    public Long getId()
@@ -111,4 +116,14 @@ public class Product implements Serializable
    {
       this.items = items;
    }
+
+public Date getStartDate() {
+	return startDate;
+}
+
+public void setStartDate(Date startDate) {
+	this.startDate = startDate;
+}
+   
+   
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.Reception;
-import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,7 +18,6 @@ public class ItemListController {
 	
 	@Inject ItemRepositoryBean itemRepositoryBean;
 	
-	@SuppressWarnings("unused")
 	@Inject
 	private void init() {
 		openItemsList = itemRepositoryBean.getOpenItemsForCurrentProduct();

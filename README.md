@@ -8,7 +8,8 @@ TODO Items
 ---
 - <s>Add new items</s>
 - <s>Close and open items by double click</s>
-- Add burndown chart
+- <s>Add burndown chart</s>
+- Add grawl for notifying user
 - Add numbers to items (product items count starts from 1)
 - Change accordian to something else because it automatically closes
 - Add timestamp column (lastModified) to Item for sorting purposes

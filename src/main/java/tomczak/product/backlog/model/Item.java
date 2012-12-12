@@ -68,7 +68,7 @@ public class Item implements Serializable
    @ManyToOne
    private Status status;
    
-   private @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+   private @OneToMany(mappedBy = "item")
    @OrderBy("date")
    List<ItemEvent> events = new ArrayList<ItemEvent>();
 

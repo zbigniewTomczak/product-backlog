@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<body>
+	<p:panel header="Login with:" rendered="#{empty userSessionBean.email}">
+		<h:panelGrid columns="1">
+			<h:form>
+				<h:commandLink action="#{loginController.googleLogin}"
+					value="Google account" />
+			</h:form>
+		</h:panelGrid>
+	</p:panel>
+	<p:panel rendered="#{not empty userSessionBean.email}">
+		<h:form>
+				<h:commandLink action="#{userSessionBean.logout}"
+					value="Logout" />
+			</h:form>
+	</p:panel>
+</body>
+</html>

@@ -15,7 +15,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "date", "item_id",
@@ -24,24 +23,22 @@ import javax.persistence.Version;
 	@NamedQuery(name = ItemEvent.GET_BY_DATE_AND_ITEM_ID, query = "SELECT ie FROM ItemEvent ie WHERE ie.date = :date AND ie.item.id = :itemId") 
 })
 public class ItemEvent implements Serializable {
-
 	private static final long serialVersionUID = 1L;
+
 	public static final String GET_BY_DATE_AND_ITEM_ID = "ItemEvent.getByDateAndItemId";
 	@Id
-	private @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
-	Long id = null;
-	@Version
-	private @Column(name = "version")
-	int version = 0;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(updatable = false, nullable = false)
+	private Long id = null;
 
+	@Column(nullable = false)
 	private @Temporal(TemporalType.DATE)
 	Date date;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Item item;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Status status;
 
 	public Long getId() {
@@ -50,14 +47,6 @@ public class ItemEvent implements Serializable {
 
 	public void setId(final Long id) {
 		this.id = id;
-	}
-
-	public int getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(final int version) {
-		this.version = version;
 	}
 
 	@Override

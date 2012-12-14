@@ -22,6 +22,8 @@ import org.openid4java.message.ParameterList;
 import org.openid4java.message.ax.AxMessage;
 import org.openid4java.message.ax.FetchResponse;
 
+import tomczak.product.backlog.helper.UserDataBean;
+import tomczak.product.backlog.helper.UserManagerBean;
 import tomczak.product.backlog.session.UserSessionBean;
 
 @WebServlet(GoogleLoginComeBackServlet.SERVLET_PATH)
@@ -31,6 +33,7 @@ public class GoogleLoginComeBackServlet extends HttpServlet{
 	
 	@Inject private ConsumerManager manager;
 	@Inject private UserSessionBean userBean;
+	@Inject private UserManagerBean userManagerBean;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -66,18 +69,24 @@ public class GoogleLoginComeBackServlet extends HttpServlet{
 				FetchResponse fetchResp = (FetchResponse) authSuccess
 						.getExtension(AxMessage.OPENID_NS_AX);
 
-				List emails = fetchResp.getAttributeValues("email");
+				List email = fetchResp.getAttributeValues("email");
 				List firstName = fetchResp.getAttributeValues("firstName");
 				List lastName = fetchResp.getAttributeValues("lastName");
-				String email = (String) emails.get(0);
 				System.out.println("OpenIdlogin done with email: " + email);
 				System.out.println("OpenIdlogin done with firstName: " + firstName.get(0));
 				System.out.println("OpenIdlogin done with lastName: " + lastName.get(0));
 				//TODO sequre lists
 				
-				userBean.setEmail(email);
-				userBean.setFirstName(firstName.get(0).toString());
-				userBean.setLastName(lastName.get(0).toString());
+				if (email.size() == 0) {
+					//TODO log error
+					return; 
+				}
+				Long userId = userManagerBean.getUserId(email.get(0).toString());
+				if (userId == null) {
+					userId = userManagerBean.createUser(email.get(0).toString(), firstName.get(0).toString(), lastName.get(0).toString());
+				}
+				
+				userBean.setCurrentUserId(userId);
 				
 				StringBuffer requestURL = req.getRequestURL();
 				int toIndex = requestURL.indexOf(req.getRequestURI());

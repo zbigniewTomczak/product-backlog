@@ -9,7 +9,7 @@
 
 </h:head>
 <body>
-	<p:panel header="Login with:" rendered="#{empty userSessionBean.email}">
+	<p:panel header="Login with:" rendered="#{empty currentUser}">
 		<h:panelGrid columns="1">
 			<h:form>
 				<h:commandLink action="#{loginController.googleLogin}"
@@ -17,7 +17,7 @@
 			</h:form>
 		</h:panelGrid>
 	</p:panel>
-	<p:panel rendered="#{not empty userSessionBean.email}">
+	<p:panel rendered="#{not empty currentUser}" header="#{currentUser.email}">
 		<h:form>
 				<h:commandLink action="#{userSessionBean.logout}"
 					value="Logout" />

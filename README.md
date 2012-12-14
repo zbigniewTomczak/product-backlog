@@ -6,13 +6,14 @@ This project is in progress. See the items below:
 
 TODO Items
 ---
-- <s>Add new items</s>
-- <s>Close and open items by double click</s>
-- <s>Add burndown chart</s>
+- ~~Add new items~~
+- ~~Close and open items by double click~~
+- ~~Add burndown chart~~
 - Add grawl for notifying user
 - Add numbers to items (product items count starts from 1)
 - Change accordian to something else because it automatically closes
 - Add timestamp column (lastModified) to Item for sorting purposes
+- Add timezone configuration option for burndown chart
 - When start typing automatically focus to 'New item' inputbox
 - When typing long name widen the text field of  'New item'
 - Add priority to issues

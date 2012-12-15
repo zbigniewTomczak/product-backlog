@@ -9,19 +9,26 @@
 
 </h:head>
 <body>
-	<p:panel header="Login with:" rendered="#{empty currentUser}">
-		<h:panelGrid columns="1">
-			<h:form>
+	<p:panel header="Product Backlog" rendered="#{empty currentUser}" style=" margin: 50px auto;
+    width: 300px;">
+    	<h2>Login with:</h2>
+		<h:form>
+			<h:panelGrid columns="1">
 				<h:commandLink action="#{loginController.googleLogin}"
 					value="Google account" />
-			</h:form>
-		</h:panelGrid>
+				<h:commandLink action="#{demoLoginController.login(-1)}"
+					value="Demo User 1" />
+				<h:commandLink action="#{demoLoginController.login(-2)}"
+					value="Demo User 2" />
+
+			</h:panelGrid>
+		</h:form>
 	</p:panel>
-	<p:panel rendered="#{not empty currentUser}" header="#{currentUser.email}">
+	<p:panel rendered="#{not empty currentUser}"
+		header="#{currentUser.email}">
 		<h:form>
-				<h:commandLink action="#{userSessionBean.logout}"
-					value="Logout" />
-			</h:form>
+			<h:commandLink action="#{userSessionBean.logout}" value="Logout" />
+		</h:form>
 	</p:panel>
 </body>
 </html>

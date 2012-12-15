@@ -7,20 +7,21 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import tomczak.product.backlog.helper.item.ItemOpenessVector;
 import tomczak.product.backlog.model.Item;
 import tomczak.product.backlog.model.Product;
-import tomczak.product.backlog.qualifiers.Current;
+import tomczak.product.backlog.qualifiers.CurrentProduct;
 
 @Stateless
 public class BurnDownBean {
 	@Inject EntityManager em;
-	@Inject @Current Product product;
+	@Inject @CurrentProduct Long id;
 	@Inject Date today;
 	
 	@Produces
 	public ItemOpenessVector getItemOpenessVector() {
 		ItemOpenessVector v;
-		product = em.find(Product.class, product.getId());
+		Product product = em.find(Product.class, id);
 		if (product.getStartDate() == null) {
 			v = new ItemOpenessVector(today, today);
 		} else {

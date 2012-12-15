@@ -1,4 +1,4 @@
-package tomczak.product.backlog.helper;
+package tomczak.product.backlog.helper.item;
 
 import java.util.Date;
 import java.util.List;
@@ -8,17 +8,17 @@ import javax.enterprise.inject.Any;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import tomczak.product.backlog.helper.EntityHelper;
 import tomczak.product.backlog.model.Item;
 import tomczak.product.backlog.model.ItemEvent;
 import tomczak.product.backlog.model.Product;
 import tomczak.product.backlog.model.Status;
-import tomczak.product.backlog.qualifiers.Current;
+import tomczak.product.backlog.qualifiers.CurrentProduct;
 
 @Stateless
 public class ItemEventsBean {
 
-	@Inject @Current 
-	private Product currentProduct;
+	@Inject @CurrentProduct Long id;
 	
 	@Inject private Date today;
 	@Inject private EntityHelper entityHelper;
@@ -28,7 +28,7 @@ public class ItemEventsBean {
 	
 	public boolean create(String newItemName) {
 		Status initialStatus = entityHelper.findById(Status.class, Status.INITIAL_STATUS_ID);
-		currentProduct = em.find(Product.class, currentProduct.getId());
+		Product currentProduct = em.find(Product.class, id);
 		Item item = new Item();
 		item.setName(newItemName);
 		item.setProduct(currentProduct);

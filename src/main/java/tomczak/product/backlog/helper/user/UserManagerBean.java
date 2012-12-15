@@ -1,4 +1,4 @@
-package tomczak.product.backlog.helper;
+package tomczak.product.backlog.helper.user;
 
 import java.util.List;
 

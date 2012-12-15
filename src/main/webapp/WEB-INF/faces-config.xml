@@ -7,6 +7,11 @@
   <navigation-case>
    <from-outcome>login</from-outcome>
    <to-view-id>/login.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>myProducts</from-outcome>
+   <to-view-id>/myProducts.xhtml</to-view-id>
    <redirect></redirect>
   </navigation-case>
  </navigation-rule>

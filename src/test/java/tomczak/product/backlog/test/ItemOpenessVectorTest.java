@@ -7,7 +7,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import tomczak.product.backlog.helper.ItemOpenessVector;
+import tomczak.product.backlog.helper.item.ItemOpenessVector;
 
 public class ItemOpenessVectorTest {
 	@Test

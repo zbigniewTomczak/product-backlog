@@ -5,7 +5,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import tomczak.product.backlog.helper.ItemEventsBean;
+import tomczak.product.backlog.helper.item.ItemEventsBean;
 
 @Named @RequestScoped
 public class ItemController {

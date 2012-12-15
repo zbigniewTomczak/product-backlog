@@ -1,43 +1,37 @@
-package tomczak.product.backlog.helper;
+package tomczak.product.backlog.helper.item;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.enterprise.event.Observes;
-import javax.enterprise.event.Reception;
-import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 import tomczak.product.backlog.model.Item;
-import tomczak.product.backlog.model.Product;
 import tomczak.product.backlog.model.Status;
-import tomczak.product.backlog.qualifiers.Current;
+import tomczak.product.backlog.qualifiers.CurrentProduct;
 
 @Stateless
 public class ItemRepositoryBean {
 	@Inject EntityManager em;
-	@Inject @Current Product product;
+	@Inject @CurrentProduct Long id;
 	
 	List<Item> openItemsList = new ArrayList<Item>();
 	List<Item> closedItemsList = new ArrayList<Item>();
 	
-	@SuppressWarnings("unused")
+	//@SuppressWarnings("unused")
 	@Inject
 	public void init() {
 		openItemsList = new ArrayList<Item>();
 		closedItemsList = new ArrayList<Item>();
 		openItemsList = em.createNamedQuery(Item.GET_BY_PRODUCT_ID_AND_STATUS_ID, Item.class)
-				.setParameter("productId", product.getId())
+				.setParameter("productId", id)
 				.setParameter("statusId", Status.OPEN_STATUS_ID)
 				.getResultList();
 		closedItemsList = em.createNamedQuery(Item.GET_BY_PRODUCT_ID_AND_STATUS_ID, Item.class)
-				.setParameter("productId", product.getId())
+				.setParameter("productId", id)
 				.setParameter("statusId", Status.CLOSE_STATUS_ID)
 				.getResultList();
 		Comparator<Item> comparator = new Item.LastChangeComparator();

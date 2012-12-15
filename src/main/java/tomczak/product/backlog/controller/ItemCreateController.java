@@ -10,8 +10,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import tomczak.product.backlog.helper.EntityHelper;
-import tomczak.product.backlog.helper.ItemConstraintBean;
-import tomczak.product.backlog.helper.ItemEventsBean;
+import tomczak.product.backlog.helper.item.ItemConstraintBean;
+import tomczak.product.backlog.helper.item.ItemEventsBean;
 import tomczak.product.backlog.model.Item;
 
 @Named @RequestScoped

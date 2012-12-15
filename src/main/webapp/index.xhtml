@@ -9,12 +9,14 @@
     <!-- <o:conditionalComment if="lte IE 8">
     <h:outputScript library="js" name="excanvas.min.js"></h:outputScript>
     </o:conditionalComment> -->
+    <h:outputScript library="js" name="jquery.colorhelpers.js"></h:outputScript>
     <h:outputScript library="js" name="jquery.flot.js"></h:outputScript>
     <h:outputScript library="js" name="ajaxPlot.js"></h:outputScript>
 
 </h:head>
 <body>
-	<p:layout fullPage="true">
+	<h:outputText value="Product not selected" rendered="#{not empty currentProduct}"/>
+	<p:layout fullPage="true" rendered="#{not empty currentProduct}">
 
 		<p:layoutUnit position="north" size="100" resizable="true"
 			closable="true" collapsible="true">

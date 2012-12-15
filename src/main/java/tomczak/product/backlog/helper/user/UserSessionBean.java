@@ -1,10 +1,12 @@
-package tomczak.product.backlog.session;
+package tomczak.product.backlog.helper.user;
 
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
+
+import tomczak.product.backlog.qualifiers.CurrentUser;
 
 @SessionScoped @Named
 public class UserSessionBean implements Serializable{
@@ -13,6 +15,7 @@ public class UserSessionBean implements Serializable{
 	private Long currentUserId = null;
 
 	@Produces
+	@CurrentUser
 	public Long currentUserId() {
 		return currentUserId;
 	}

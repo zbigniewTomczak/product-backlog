@@ -1,4 +1,4 @@
-package tomczak.product.backlog.helper;
+package tomczak.product.backlog.helper.item;
 
 import java.util.Calendar;
 import java.util.Date;

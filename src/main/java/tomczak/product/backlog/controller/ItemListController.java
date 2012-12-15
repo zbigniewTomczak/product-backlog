@@ -8,7 +8,7 @@ import javax.enterprise.event.Reception;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import tomczak.product.backlog.helper.ItemRepositoryBean;
+import tomczak.product.backlog.helper.item.ItemRepositoryBean;
 import tomczak.product.backlog.model.Item;
 
 @Named @RequestScoped

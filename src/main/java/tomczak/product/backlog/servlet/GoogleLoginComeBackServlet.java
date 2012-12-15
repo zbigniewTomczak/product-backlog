@@ -22,9 +22,9 @@ import org.openid4java.message.ParameterList;
 import org.openid4java.message.ax.AxMessage;
 import org.openid4java.message.ax.FetchResponse;
 
-import tomczak.product.backlog.helper.UserDataBean;
-import tomczak.product.backlog.helper.UserManagerBean;
-import tomczak.product.backlog.session.UserSessionBean;
+import tomczak.product.backlog.helper.user.UserDataBean;
+import tomczak.product.backlog.helper.user.UserManagerBean;
+import tomczak.product.backlog.helper.user.UserSessionBean;
 
 @WebServlet(GoogleLoginComeBackServlet.SERVLET_PATH)
 public class GoogleLoginComeBackServlet extends HttpServlet{

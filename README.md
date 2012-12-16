@@ -9,6 +9,7 @@ TODO Items
 - ~~Add new items~~
 - ~~Close and open items by double click~~
 - ~~Add burndown chart~~
+- burn down chart scale x axis from 0
 - Add grawl for notifying user
 - Add numbers to items (product items count starts from 1)
 - Change accordian to something else because it automatically closes
@@ -18,7 +19,9 @@ TODO Items
 - When typing long name widen the text field of  'New item'
 - Add priority to issues
 - Add user capabilities: 
- - product manager user role to create product and assign new roles 
+ - user registration and login
+ - ~~product manager user role to create product~~ and assign new roles
+ - ~~add login with google~~
  - contributor access
  - readonly access
 - Product can be: private (only for logged in users with readonly access), public
@@ -52,3 +55,5 @@ TODO Items
 
 - Release functionality:
  - product manager specifies release dates and items between those dates creates release notes automatically 
+
+- Project selection through url string (i.e. http://host.com/product1)

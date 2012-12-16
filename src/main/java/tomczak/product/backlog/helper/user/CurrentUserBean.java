@@ -16,6 +16,7 @@ public class CurrentUserBean {
 	private User user;
 
 	@Produces
+	@CurrentUser
 	@Named
 	public User getCurrentUser(@CurrentUser Long id) {
 		if (id != null) {
@@ -27,4 +28,5 @@ public class CurrentUserBean {
 		
 		return null;
 	}
+	
 }

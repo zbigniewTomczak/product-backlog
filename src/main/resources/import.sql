@@ -22,8 +22,8 @@ insert into UserData (id,user_id, stringData, userDataName_id) values (-4,-2,'Us
 
 insert into ProductUserRole (id, product_id, role_id, user_id) values (-1,-1,1,-1);
 insert into ProductUserRole (id, product_id, role_id, user_id) values (-2,-2,2,-1);
-insert into ProductUserRole (id, product_id, role_id, user_id) values (-3,-1,1,-2);
-insert into ProductUserRole (id, product_id, role_id, user_id) values (-4,-2,2,-2);
+insert into ProductUserRole (id, product_id, role_id, user_id) values (-3,-1,2,-2);
+insert into ProductUserRole (id, product_id, role_id, user_id) values (-4,-2,1,-2);
 
 --insert into Product (id, version, name, startDate) values (1,0, 'Demo product', '2012-12-01');
 --insert into Item (id, version, name, product_id, status_id) values (-1, 0, 'Item1', 1, 1);

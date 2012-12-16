@@ -45,11 +45,11 @@ public class UserManagerBean {
 		em.flush();
 		
 		if (firstName!= null) {
-			userDataBean.getStringUserDataId(user.getId(), UserDataName.FIRST_NAME_ID, firstName);
+			userDataBean.setStringUserDataId(user.getId(), UserDataName.FIRST_NAME_ID, firstName);
 		}
 		
 		if (lastName != null) {
-			userDataBean.getStringUserDataId(user.getId(), UserDataName.LAST_NAME_ID, lastName);
+			userDataBean.setStringUserDataId(user.getId(), UserDataName.LAST_NAME_ID, lastName);
 		}
 		
 		return user.getId();

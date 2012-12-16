@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="content">
+		<p:layout  rendered="#{not empty currentProduct}">
+
+			<p:layoutUnit position="north" size="100" resizable="true"
+				closable="true" collapsible="true">
+				<h:outputText value="Product description and options" />
+			</p:layoutUnit>
+
+			<p:layoutUnit position="south" size="100" resizable="true"
+				closable="true" collapsible="true">
+				<h:outputText value="South unit content." />
+			</p:layoutUnit>
+
+			<p:layoutUnit position="east" size="500" header="Burndown chart"
+				resizable="true" collapsible="true" minSize="50">
+				<p:panel id="plot_panel">
+					<a id="data_link" class="hidden" href="./rest/burndown/"
+						style="display: none;">Plot data</a>
+					<!--  <div id="placeholder" style="width:600px;height:300px;"></div>-->
+					<div id="placeholder" style="height: 200px; width: 98%;"></div>
+					<p:ajaxStatus onsuccess="loadPlotData()" />
+				</p:panel>
+			</p:layoutUnit>
+
+
+			<p:layoutUnit position="center">
+				<p:panel>
+					<h:form>
+						<p:inputText id="newItemName"
+							value="#{itemCreateController.newItemName}" required="true"
+							requiredMessage="This field cannot be empty"
+							binding="#{itemCreateController.newNameInput}" />
+						<p:commandButton action="#{itemCreateController.create}"
+							value="New item" ajax="false"></p:commandButton>
+						<br />
+						<h:message for="newItemName" errorClass="ui-message-error" />
+					</h:form>
+
+				</p:panel>
+				<p:accordionPanel multiple="true" id="itemLists">
+					<p:tab title="Open items">
+						<p:scrollPanel style="width:100%;height:100%">
+							<p:dataTable var="item"
+								value="#{itemListController.openItemsList}">
+								<p:column>
+									<h:form>
+										<h:outputText value="#{item.name}">
+										</h:outputText>
+										<p:ajax event="dblclick" update=":itemLists :plot_panel"
+											listener="#{itemController.close(item.id)}">
+											<f:param name="itemId" value="#{item.id}"></f:param>
+										</p:ajax>
+									</h:form>
+								</p:column>
+							</p:dataTable>
+						</p:scrollPanel>
+					</p:tab>
+					<p:tab title="ClosedItems">
+						<p:scrollPanel style="width:100%;height:100%">
+							<p:dataTable var="item"
+								value="#{itemListController.closedItemsList}">
+								<p:column>
+									<h:form>
+										<h:outputText value="#{item.name}">
+										</h:outputText>
+										<p:ajax event="dblclick" update=":itemLists :plot_panel"
+											listener="#{itemController.open(item.id)}">
+											<f:param name="itemId" value="#{item.id}"></f:param>
+										</p:ajax>
+									</h:form>
+								</p:column>
+							</p:dataTable>
+						</p:scrollPanel>
+					</p:tab>
+
+				</p:accordionPanel>
+			</p:layoutUnit>
+		</p:layout>
+	</ui:define>
+</ui:composition>
+</html>

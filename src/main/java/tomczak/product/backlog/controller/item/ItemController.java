@@ -1,4 +1,4 @@
-package tomczak.product.backlog.controller;
+package tomczak.product.backlog.controller.item;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -13,11 +13,13 @@ public class ItemController {
 	@Inject private ItemEventsBean itemEventsBean;
 	@Inject private FacesContext fcx;
 	
-	public void open(Long itemId) {
+	public String open(Long itemId) {
 		boolean openSuccess = itemEventsBean.open(itemId);
+		return "index";
 	}
 	
-	public void close(Long itemId) {
+	public String close(Long itemId) {
 		boolean closeSuccess = itemEventsBean.close(itemId);
+		return "index";
 	}
 }

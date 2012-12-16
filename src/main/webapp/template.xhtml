@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:insert name="preHead">
+	<f:event type="preRenderView"
+		listener="#{loginCheckController.redirectToLoginIfNotLogged}" />
+</ui:insert>
+<h:head>
+	<title>Product Backlog<ui:insert name="title"></ui:insert></title>
+	<ui:insert name="head"></ui:insert>
+</h:head>
+<h:body>
+	<ui:insert name="header">
+		<p:panel collapsed="true" rendered="#{userSessionBean.logged}">
+			<f:facet name="header">
+				<h:form>
+				<h:outputText value="#{currentUserFirstName} #{currentUserLastName}" />
+					<h:commandLink action="#{userSessionBean.logout}" value="Logout" />
+				</h:form>
+			</f:facet>
+		</p:panel>
+	</ui:insert>
+	<ui:insert name="content"></ui:insert>
+</h:body>
+</html>

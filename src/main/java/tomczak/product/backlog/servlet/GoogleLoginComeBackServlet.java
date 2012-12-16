@@ -95,7 +95,7 @@ public class GoogleLoginComeBackServlet extends HttpServlet{
 				}
 				
 				requestURL.delete(toIndex, requestURL.length());
-				String path = req.getContextPath() + "/faces/login.xhtml";
+				String path = req.getContextPath() + "/faces/products.xhtml";
 				requestURL.append(path);
 				
 				resp.sendRedirect(path);

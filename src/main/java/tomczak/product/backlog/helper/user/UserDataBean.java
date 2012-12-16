@@ -14,18 +14,14 @@ import tomczak.product.backlog.model.UserDataName;
 public class UserDataBean {
 	@Inject EntityManager em;
 	
-	public Long getStringUserDataId(Long userId, Long userDataNameId, String data) {
-		List<UserData> list = em.createNamedQuery(UserData.GET_BY_USER_ID_AND_NAME_ID,UserData.class)
-			.setParameter("userId", userId)
-			.setParameter("userDataNameId", userDataNameId)
-			.getResultList();
-		if (list.size() > 0) {
-			UserData userData = list.get(0);
+	public Long setStringUserDataId(Long userId, Long userDataNameId, String data) {
+		UserData userData = getUserDataByUserIdAndDataNameId(userId, userDataNameId);
+		if (userData != null) {
 			userData.setStringData(data);
 			return userData.getId();
 		}
 		
-		UserData userData = new UserData();
+		userData = new UserData();
 		userData.setStringData(data);
 		User user = em.find(User.class, userId);
 		userData.setUser(user);
@@ -35,5 +31,22 @@ public class UserDataBean {
 		em.persist(userData);
 		
 		return userData.getId();
+	}
+	
+	public String getStringUserData (Long userId, Long userDataNameId) {
+		UserData userData = getUserDataByUserIdAndDataNameId(userId, userDataNameId);
+		return userData.getStringData() != null ? userData.getStringData() : null;
+	}
+	
+	public UserData getUserDataByUserIdAndDataNameId(Long userId, Long userDataNameId) {
+		List<UserData> list = em.createNamedQuery(UserData.GET_BY_USER_ID_AND_NAME_ID,UserData.class)
+				.setParameter("userId", userId)
+				.setParameter("userDataNameId", userDataNameId)
+				.getResultList();
+			if (list.size() > 0) {
+				return list.get(0);
+			}
+			
+			return null;
 	}
 }

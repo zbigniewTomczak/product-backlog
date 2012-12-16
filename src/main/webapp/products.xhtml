@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<body>
+<ui:composition template="/template.xhtml">
+<ui:define name="content">
+ 
+<p:panel rendered="#{empty currentUserProductOnwershipList}" >
+<h:form>
+<p:inputText id="newProductName" value="#{productCreateController.newProductName}"
+						required="true" requiredMessage="This field cannot be empty"
+						binding="#{productCreateController.newNameInput}" />
+					<p:commandButton action="#{productCreateController.create}" value="Create new product"
+						ajax="false"></p:commandButton>
+					<br />
+					<h:message for="newProductName" errorClass="ui-message-error" />
+</h:form>
+</p:panel>
+<ui:remove><p:panel rendered="#{not empty currentUserProductOnwershipList}" header="Product list">
+	<p:dataList type="none" var="product" value="#{currentUserProductOnwershipList}">
+		<h:form>
+			<h:commandLink value="#{product.name}" action="#{productChooseController.choose(product.id)}" />
+		</h:form>
+	</p:dataList>
+</p:panel>
+</ui:remove>
+</ui:define>
+</ui:composition>
+</body> 
+</html>

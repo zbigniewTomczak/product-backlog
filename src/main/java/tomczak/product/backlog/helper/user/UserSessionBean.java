@@ -28,6 +28,10 @@ public class UserSessionBean implements Serializable{
 	public void setCurrentUserId(Long userId) {
 		currentUserId = userId;
 	}
+
+	public boolean isLogged() {
+		return currentUserId != null;
+	}
 	
 	
 }

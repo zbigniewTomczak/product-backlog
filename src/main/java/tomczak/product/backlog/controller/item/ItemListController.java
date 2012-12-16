@@ -1,4 +1,4 @@
-package tomczak.product.backlog.controller;
+package tomczak.product.backlog.controller.item;
 
 import java.util.List;
 

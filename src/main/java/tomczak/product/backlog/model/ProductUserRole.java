@@ -8,11 +8,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name=ProductUserRole.GET_BY_USER_ID_AND_ROLE_ID,
+			query="SELECT p.product FROM ProductUserRole p WHERE p.user.id = :userId  AND p.role.id = :roleId"),
+	@NamedQuery(name=ProductUserRole.GET_BY_PRODUCT_NAME_USER_ID_AND_ROLE_ID,
+			query="SELECT p.product.id FROM ProductUserRole p WHERE p.user.id = :userId  AND p.product.name = :name AND p.role.id = :roleId")
+})
 public class ProductUserRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String GET_BY_USER_ID_AND_ROLE_ID = "ProductUserRole.getByUserIdAndRoleId";
+	public static final String GET_BY_PRODUCT_NAME_USER_ID_AND_ROLE_ID = "ProductUserRole.getByProductNameUserIdAndRoleId";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)

@@ -1,4 +1,4 @@
-package tomczak.product.backlog.controller;
+package tomczak.product.backlog.controller.login;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,12 +22,13 @@ import org.openid4java.message.ax.FetchRequest;
 import tomczak.product.backlog.servlet.GoogleLoginComeBackServlet;
 
 @Named @RequestScoped
-public class LoginController {
+public class GoogleLoginController implements LoginController {
 	final static String GOOGLE_ENDPOINT = "https://www.google.com/accounts/o8/id";
 	@Inject private FacesContext fc;
 	@Inject private ConsumerManager manager;
 	
-	public void googleLogin() {
+	@Override
+	public void login() {
 		Object request = fc.getExternalContext().getRequest();
 		if ( request instanceof HttpServletRequest) {
 			HttpServletRequest sevletRequest = (HttpServletRequest) request;

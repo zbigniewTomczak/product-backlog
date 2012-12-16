@@ -1,4 +1,4 @@
-package tomczak.product.backlog.controller;
+package tomczak.product.backlog.controller.item;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -28,11 +28,12 @@ public class ItemCreateController {
 		if (itemExists) {
 			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Item with this name already exists", "Item with this name already exists");
             fcx.addMessage(newNameInput.getClientId(), m);
-            return "?faces-redirect=true";
+            fcx.getExternalContext().getFlash().setKeepMessages(true);
+            return "index";
 		}
 		boolean creationSuccess = itemEventsBean.create(newItemName);
 		newItemName = null;
-		return "?faces-redirect=true";
+		return "index";
 	}
 	
 	public String getNewItemName() {

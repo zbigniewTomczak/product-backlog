@@ -1,8 +1,17 @@
 package tomczak.product.backlog.model;
 
 import java.io.Serializable;
-import java.lang.String;
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -22,6 +31,8 @@ public class User implements Serializable {
 	@Column(unique = true, nullable = false)
 	private String email;
 	
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true)
+	private List<UserData> userData;
 	
 	public Long getId() {
 		return id;
@@ -38,5 +49,14 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public List<UserData> getUserData() {
+		return userData;
+	}
+
+	public void setUserData(List<UserData> userData) {
+		this.userData = userData;
+	}
    
+	
 }

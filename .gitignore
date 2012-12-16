@@ -4,4 +4,12 @@
 *.jar
 *.war
 *.ear
+
+# Eclipse specific
 *.jsfdia
+.settings*
+.classpath
+.project
+
+# Maven target
+target*

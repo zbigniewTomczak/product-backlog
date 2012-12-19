@@ -1,18 +1,13 @@
 package tomczak.product.backlog.controller.item;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import tomczak.product.backlog.helper.EntityHelper;
 import tomczak.product.backlog.helper.item.ItemConstraintBean;
 import tomczak.product.backlog.helper.item.ItemEventsBean;
-import tomczak.product.backlog.model.Item;
+import tomczak.product.backlog.util.JSFMessages;
 
 @Named @RequestScoped
 public class ItemCreateController {
@@ -21,17 +16,19 @@ public class ItemCreateController {
 	
 	@Inject private ItemEventsBean itemEventsBean;
 	@Inject private ItemConstraintBean itemConstraintBean;
-	@Inject private FacesContext fcx;
+	@Inject private JSFMessages jsfMessages;
 	
 	public String create() {
 		boolean itemExists = itemConstraintBean.alreadyExists(newItemName);
 		if (itemExists) {
-			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Item with this name already exists", "Item with this name already exists");
-            fcx.addMessage(newNameInput.getClientId(), m);
-            fcx.getExternalContext().getFlash().setKeepMessages(true);
+			jsfMessages.postErrorMessage("Item with this name already exists", newNameInput.getClientId());
             return "index";
 		}
 		boolean creationSuccess = itemEventsBean.create(newItemName);
+		if (creationSuccess) {
+			jsfMessages.postInfoMessage("Item " + newItemName + " created.");
+			return "index";
+		}
 		newItemName = null;
 		return "index";
 	}

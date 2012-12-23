@@ -17,13 +17,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Basic;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "name",
 		"product_id" }))
 @NamedQueries({
 		@NamedQuery(name = Item.GET_BY_PRODUCT_ID_AND_STATUS_ID, query = "SELECT i FROM Item i WHERE i.product.id = :productId AND i.status.id=:statusId"),
-		@NamedQuery(name = Item.COUNT_BY_NAME_AND_PRODUCT_ID, query = "SELECT COUNT(i) FROM Item i WHERE i.product.id = :productId AND i.name = :name") })
+		@NamedQuery(name = Item.COUNT_BY_NAME_AND_PRODUCT_ID, query = "SELECT COUNT(i) FROM Item i WHERE i.product.id = :productId AND i.name = :name"),
+		@NamedQuery(name = Item.GET_NEXT_ITEM_NUMBER_FOR_PRODUCT_ID, query = "SELECT (MAX(i.number)+1) FROM Item i WHERE i.product.id = :productId"),
+})
 public class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -51,6 +54,7 @@ public class Item implements Serializable {
 
 	public static final String GET_BY_PRODUCT_ID_AND_STATUS_ID = "Item.getByProductIdAndStatusId";
 	public static final String COUNT_BY_NAME_AND_PRODUCT_ID = "Item.CountByNameAndProductId";
+	public static final String GET_NEXT_ITEM_NUMBER_FOR_PRODUCT_ID = "Item.getNextItemNumberForProductId";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -66,6 +70,9 @@ public class Item implements Serializable {
 	@ManyToOne(optional = false)
 	private Status status;
 
+	@Basic(optional = false)
+	private Integer number;
+	
 	private @OneToMany(mappedBy = "item")
 	@OrderBy("date")
 	List<ItemEvent> events = new ArrayList<ItemEvent>();
@@ -141,5 +148,15 @@ public class Item implements Serializable {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+	
+	
 
 }

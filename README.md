@@ -11,7 +11,7 @@ TODO Items
 - ~~Add burndown chart~~
 - ~~burn down chart scale x axis from 0~~
 - ~~Add grawl for notifying user~~
-- Add numbers to items (product items count starts from 1)
+- ~~Add numbers to items (product items count starts from 1)~~
 - ~~Change accordian to something else because it automatically closes~~
 - Add timestamp column (lastModified) to Item for sorting purposes
 - Add timezone configuration option for burndown chart

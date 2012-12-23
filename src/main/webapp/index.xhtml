@@ -75,7 +75,7 @@
 							value="#{itemListController.openItemsList}" id="openItems">
 							<p:column>
 								<h:form>
-									<h:outputText value="#{item.name}">
+									#<h:outputText value="#{item.number} #{item.name}">
 									</h:outputText>
 									<p:ajax event="dblclick"
 										update=":closedItems :openItems :plot_panel"
@@ -91,7 +91,7 @@
 							value="#{itemListController.closedItemsList}" id="closedItems">
 							<p:column>
 								<h:form>
-									<h:outputText value="#{item.name}">
+									#<h:outputText value="#{item.number} #{item.name}">
 									</h:outputText>
 									<p:ajax event="dblclick"
 										update=":closedItems :openItems :plot_panel"

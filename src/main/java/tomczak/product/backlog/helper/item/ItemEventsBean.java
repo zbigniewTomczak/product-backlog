@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import tomczak.product.backlog.helper.EntityHelper;
 import tomczak.product.backlog.model.Item;
 import tomczak.product.backlog.model.ItemEvent;
-import tomczak.product.backlog.model.Product;
 import tomczak.product.backlog.model.Status;
 import tomczak.product.backlog.qualifiers.CurrentProduct;
 
@@ -26,32 +25,6 @@ public class ItemEventsBean {
 
 	@Inject @Any javax.enterprise.event.Event<Item> itemChangeEvent;
 	
-	public boolean create(String newItemName) {
-		Status initialStatus = entityHelper.findById(Status.class, Status.INITIAL_STATUS_ID);
-		Product currentProduct = em.find(Product.class, id);
-		Item item = new Item();
-		item.setName(newItemName);
-		item.setProduct(currentProduct);
-		item.setStatus(initialStatus);
-		entityHelper.persist(item);
-		ItemEvent event = new ItemEvent();
-		event.setDate(today);
-		event.setItem(item);
-		event.setStatus(initialStatus);
-		entityHelper.persist(event);
-		if(currentProduct.getStartDate() == null) {
-			currentProduct.setStartDate(today);
-			em.persist(currentProduct);
-		}
-		System.out.println("Created:" + event.getId() + "(" + event.getId()+")" + event.getItem().getId());
-		if (item.getId() != null && event.getId() != null) {
-			itemChangeEvent.fire(item);
-			return true;
-		}
-		
-		return false;
-	}
-
 	public boolean open(Long currentItemId) {
 		return newStatus(currentItemId, Status.OPEN_STATUS_ID);
 	}

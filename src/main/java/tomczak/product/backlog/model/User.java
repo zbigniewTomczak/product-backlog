@@ -31,6 +31,9 @@ public class User implements Serializable {
 	@Column(unique = true, nullable = false)
 	private String email;
 	
+	@Column(length=128, nullable=true)
+	private String password;
+	
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<UserData> userData;
 	
@@ -48,6 +51,14 @@ public class User implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public List<UserData> getUserData() {

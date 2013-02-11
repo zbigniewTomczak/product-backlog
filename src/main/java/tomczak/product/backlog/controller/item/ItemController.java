@@ -11,6 +11,7 @@ public class ItemController {
 	
 	@Inject private ItemEventsBean itemEventsBean;
 	
+	//TODO add interceptor to check if has modification rights
 	public String open(Long itemId) {
 		itemEventsBean.open(itemId);
 		return "index";

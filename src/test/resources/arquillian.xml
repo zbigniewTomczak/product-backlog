@@ -10,7 +10,7 @@
 <!--    </engine> -->
 
    <!-- Example configuration for a remote JBoss AS 7 instance -->
-   <container qualifier="jboss" default="true">
+   <container qualifier="jboss" default="false">
       <protocol type="jmx-as7">
          <property name="executionType">REMOTE</property>
       </protocol>
@@ -18,5 +18,8 @@
          <property name="jbossHome">/path/to/jboss/as</property>
       </configuration>
    </container>
+   <container qualifier="weld-embedded" default="true">
+    </container>
+   
 
 </arquillian>

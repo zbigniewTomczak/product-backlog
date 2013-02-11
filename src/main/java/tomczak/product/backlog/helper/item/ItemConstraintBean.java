@@ -22,4 +22,9 @@ public class ItemConstraintBean {
 		long count = list.size() > 0 ? list.get(0) : 0;
 		return count > 0L ? true : false;
 	}
+	
+	public boolean hasEditRights(Long itemId) {
+		//TODO implement
+		return false;
+	}
 }

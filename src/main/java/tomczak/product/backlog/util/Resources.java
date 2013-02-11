@@ -33,18 +33,4 @@ public class Resources {
 		return FacesContext.getCurrentInstance();
 	}
 
-	@Produces
-	public ConsumerManager getConsumerManager() {
-		ConsumerManager manager = null;
-		try {
-			manager = new ConsumerManager();
-			manager.setAssociations(new InMemoryConsumerAssociationStore());
-			manager.setNonceVerifier(new InMemoryNonceVerifier(5000));
-			manager.setMinAssocSessEnc(AssociationSessionType.DH_SHA256);
-		} catch (ConsumerException e) {
-			// TODO report error
-			e.printStackTrace();
-		}
-		return manager;
-	}
 }

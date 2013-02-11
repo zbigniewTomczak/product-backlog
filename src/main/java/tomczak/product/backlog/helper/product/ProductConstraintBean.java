@@ -14,11 +14,10 @@ import tomczak.product.backlog.qualifiers.CurrentProduct;
 public class ProductConstraintBean {
 
 	@Inject EntityManager em;
-	@Inject @CurrentProduct Long id;
 	
-	public boolean alreadyExists(String name) {
+	public boolean alreadyExists(String name, Long userId) {
 		List<Long> list = em.createNamedQuery(ProductUserRole.GET_BY_PRODUCT_NAME_USER_ID_AND_ROLE_ID, Long.class)
-			.setParameter("userId", id)
+			.setParameter("userId", userId)
 			.setParameter("name", name)
 			.setParameter("roleId", Role.PRODUCT_MANAGER_ROLE_ID).getResultList();
 		long count = list.size() > 0 ? list.get(0) : 0;

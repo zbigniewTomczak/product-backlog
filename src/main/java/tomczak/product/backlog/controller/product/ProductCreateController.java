@@ -5,6 +5,7 @@ import javax.faces.component.UIComponent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import tomczak.product.backlog.DuplicateProductException;
 import tomczak.product.backlog.helper.product.ProductConstraintBean;
 import tomczak.product.backlog.helper.product.ProductCreateBean;
 import tomczak.product.backlog.helper.product.ProductSessionBean;
@@ -18,18 +19,18 @@ public class ProductCreateController {
 	private UIComponent newNameInput;
 	
 	@Inject private ProductCreateBean productCreateBean;
-	@Inject private ProductConstraintBean productConstraintBean;
 	@Inject private ProductSessionBean productSessionBean;
 	@Inject private JSFMessages jsfMessages;
 	@Inject @CurrentUser Long userId;
 	
 	public String create() {
-		boolean exists = productConstraintBean.alreadyExists(newProductName);
-		if (exists) {
-            jsfMessages.postErrorMessage("Product with this name already exists", newNameInput.getClientId());
+		Product product = null;
+		try {
+			product = productCreateBean.create(newProductName, userId);
+		} catch (DuplicateProductException e) {
+			jsfMessages.postErrorMessage("Product with this name already exists", newNameInput.getClientId());
             return "products";
 		}
-		Product product = productCreateBean.create(newProductName, userId);
 		if (product != null) {
 			productSessionBean.setCurrentProductId(product.getId());
 		}

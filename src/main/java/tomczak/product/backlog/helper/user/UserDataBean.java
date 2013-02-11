@@ -38,7 +38,7 @@ public class UserDataBean {
 		return userData.getStringData() != null ? userData.getStringData() : null;
 	}
 	
-	public UserData getUserDataByUserIdAndDataNameId(Long userId, Long userDataNameId) {
+	private UserData getUserDataByUserIdAndDataNameId(Long userId, Long userDataNameId) {
 		List<UserData> list = em.createNamedQuery(UserData.GET_BY_USER_ID_AND_NAME_ID,UserData.class)
 				.setParameter("userId", userId)
 				.setParameter("userDataNameId", userDataNameId)

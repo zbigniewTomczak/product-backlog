@@ -5,6 +5,7 @@ import java.util.Date;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import tomczak.product.backlog.helper.item.ItemOpenessVector;
